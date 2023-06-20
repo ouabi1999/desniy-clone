@@ -1,53 +1,74 @@
-import React, { useEffect }from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import ImgSlider from './ImgSlider'
+import { setMovies } from '../features/moviesSlice'
+import db from '../firebase'
+import bgImg from '../images/home-background.png'
+import Header from './Header'
+import ImageSlider from './ImageSlider'
+import NewDisney from './NewDisney'
+import Originals from './Originals'
+import Recommends from './Recommends'
+import Trending from './Trending'
 import Viewers from './Viewers'
-import Movies from './Movies'
-import db from "../firebase";
-import {useDispatch}  from "react-redux";
-import { setMovies } from '../features/movie/movieSlice'
+import { useDispatch } from 'react-redux'
 
+const Home = () => {
 
-function Home() {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
-    useEffect(()=>{
-       db.collection("movies").onSnapshot((snapshot) => {
-            let tempMovies = snapshot.docs.map((doc) => {
-                return { id: doc.id, ...doc.data() };
-            });
-            dispatch(
-                setMovies(tempMovies)
-            );
+    useEffect(()  => {
+            let recommends = [];
+            let originals = [];
+            let trending = [];
+            let newDisney = [];
+            db.collection('movies').onSnapshot((snapshot) => {
+            snapshot.docs.map((doc) => {
+                console.log(doc.data())
+                switch(doc.data().type){
+                    case 'recommend' :
+                        recommends = [...recommends, {id: doc.id, ...doc.data()}]
+                        break;
+                    case 'trending' :
+                        trending = [...trending, {id: doc.id, ...doc.data()}]
+                        break;
+                    case 'original' :
+                        originals = [...originals, {id: doc.id, ...doc.data()}]
+                        break;
+                    case 'new' :
+                        newDisney = [...newDisney, {id: doc.id, ...doc.data()}]
+                        break;
+                }
+            })
+            dispatch(setMovies({
+                recomanded : recommends,
+                newDisney : newDisney,
+                original : originals,
+                trending : trending
+            }))
         })
     }, [])
-
     return (
         <Container>
-            <ImgSlider />
+            <Header />
+            <ImageSlider />
             <Viewers />
-            <Movies />
+            <Recommends />
+            <NewDisney />
+            <Originals />
+            <Trending />
         </Container>
     )
 }
-
-export default Home
-
-const Container = styled.main`
-    min-height: calc(100vh - 70px);
-    padding: 0 calc(3.5vw + 5px);
+export const Container = styled.div`
+    background: url(${bgImg}) center center / cover no-repeat fixed;
     position: relative;
+    top: 70px;
+    padding: 20px 60px;
+    display: block;
     overflow-x: hidden;
-
-    &:before {
-        background: url("/images/home-background.png") center center / cover
-        no-repeat fixed;        
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
+    min-height: 500px;
+    @media (max-width: 768px){
+        padding: 10px 30px;
     }
 `
+export default Home
