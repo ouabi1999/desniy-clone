@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from "react-router-dom"
 import {useSelector} from 'react-redux'
-import { selectNewDisney } from '../features/moviesSlice'
+import { selectNewDisney } from '../features/movie/moviesSlice'
 const NewDisney = () => {
     const newDisney = useSelector(selectNewDisney);
     return (

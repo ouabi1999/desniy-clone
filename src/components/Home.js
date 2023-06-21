@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { setMovies } from '../features/moviesSlice'
+import { setMovies } from '../features/movie/moviesSlice'
 import db from '../firebase'
 import bgImg from '../images/home-background.png'
 import Header from './Header'

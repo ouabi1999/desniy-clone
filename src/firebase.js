@@ -1,12 +1,15 @@
 import firebase from 'firebase'
 const firebaseConfig = {
-    apiKey: "AIzaSyBGMUjLZiuL-G-sIQkBijXID7MdOt5Ptvw",
-    authDomain: "disney-clone-32d3d.firebaseapp.com",
-    projectId: "disney-clone-32d3d",
-    storageBucket: "disney-clone-32d3d.appspot.com",
-    messagingSenderId: "139550991802",
-    appId: "1:139550991802:web:e8e28b483917dd3a8ca983"
-  };
+  apiKey: "AIzaSyBUxoyRoAvbYD_IFEm3u-FVQwqz35Qc314",
+  authDomain: "quixotic-strand-381201.firebaseapp.com",
+  projectId: "quixotic-strand-381201",
+  storageBucket: "quixotic-strand-381201.appspot.com",
+  messagingSenderId: "346204936984",
+  appId: "1:346204936984:web:9afc345da538b4b156dc6d",
+  measurementId: "G-GLSL38XG80"
+};
+
+
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
